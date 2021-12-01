@@ -1,0 +1,11 @@
+.workarea {
+    grid-area: work;
+    background-color: #f2f3f7;
+    transition: filter 0.3s;
+  }
+  .workarea > * {
+    width: 90%;
+    margin: 25px auto;
+    background-color: white;
+  }
+  

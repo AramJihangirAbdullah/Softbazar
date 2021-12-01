@@ -1,0 +1,262 @@
+/* ------------WorkArea------------- */
+
+.work {
+    grid-area: work ;
+    background-color: #f2f3f7;
+    transition: filter 0.3s; 
+  }
+  .work > * {
+    width: 90%;
+    margin: 25px auto;
+  }
+  /* ads */
+  .adspa {
+    display: flex;
+    height: 100px;
+    justify-content: space-between;
+  }
+  .adspa > * {
+    width: 49.15%;
+  }
+  .ads {
+    height: 90px;
+    background-color: yellow;
+  }
+  /* 1st pannel */
+  #slideshow {
+    height: 400px;
+    background-color: white;
+    display: flex;
+  }
+  #menu {
+    width: 28em;
+  }
+  .menuele {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: 0.6em;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  .menuele span {
+    display: block;
+    border-radius: 50%;
+    border: solid 1px #ccc;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: 3%;
+    overflow: hidden;
+  }
+  .menuele img {
+    width: 2.125rem;
+    height: 2.125rem;
+  }
+  .menuele .ri-arrow-right-s-line {
+    position: absolute;
+    right: 5px;
+    font-size: 1.5rem;
+  }
+  /* slideshow */
+  #slide {
+    width: 70%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+  }
+  #slide img {
+    width: 59em;
+    height: 100%;
+    position: absolute;
+  }
+  #slide #labels {
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9;
+    width: 100px;
+    height: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  #slide #labels label {
+    background-color: #ccc;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+  }
+  .active {
+    background-color: var(--orange) !important;
+  }
+  .fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+  }
+  
+  @-webkit-keyframes fade {
+    from {
+      opacity: 0.4;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fade {
+    from {
+      opacity: 0.4;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  /* deals */
+  #deals {
+    display: flex;
+    justify-content: space-between;
+  }
+  .deal {
+    background-color: white;
+    width: 49%;
+    height: auto;
+  }
+  .deal_header {
+    display: flex;
+    align-items: center;
+  }
+  .deal_header > * {
+    margin: 7px 0 7px 15px;
+  }
+  .deal_header .deal_icon {
+    width: 30px;
+    height: 30px;
+  }
+  .products {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  .product {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 23%;
+  }
+  .productimg {
+    width: 100%;
+    height: 180px;
+    margin-bottom: 3px;
+    position: relative;
+  }
+  .product .productimg img {
+    width:70%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+  /* Large deal */
+  #Ldeal {
+    background-color: white;
+    height: auto;
+  }
+  #Ldeal .Lproducts {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  #Ldeal .Lproduct {
+    width: 18%;
+    border-radius: 20px;
+    background-color: rgb(255, 249, 238);
+  }
+  #Ldeal .price {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+  #Ldeal .dis {
+    background-color: #ffdbad;
+    border-radius: 30px;
+    padding: 1px 7px;
+  }
+  
+  #Ldeal .Lproducts .productimg {
+    width: 100%;
+    height: 180px;
+    margin-bottom: 3px;
+    position: relative;
+  }
+  #Ldeal .Lproducts .productimg img{
+    max-height:70%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+  
+  @media (max-width: 1100px) {
+    #slideshow {
+      height: 350px;
+    }
+    #menu {
+      width: 22em;
+    }
+  }
+  
+  @media (max-width: 900px) {
+    .adspa {
+      height: auto;
+      flex-direction: column;
+    }
+    .adspa > * {
+      width: 100%;
+      height: 90px;
+    }
+    .adspa > *:not(:last-child) {
+      margin-bottom: 10px;
+    }
+    #deals {
+      flex-direction: column;
+    }
+    .deal {
+      width: 100%;
+    }
+    #deals > *:not(:last-child) {
+      margin-bottom: 25px;
+    }
+  }
+  @media (max-width: 750px) {
+    /* slideshow */
+    #slideshow {
+      height: 300px;
+      background-color: white;
+      display: flex;
+    }
+  }
+  @media (max-width: 600px) {
+    /* slideshow */
+    #slideshow {
+      height: 250px;
+      background-color: white;
+      display: flex;
+    }
+  }
+  @media (max-width: 500px) {
+    /* slideshow */
+    #slideshow {
+      height: 200px;
+      background-color: white;
+      display: flex;
+    }
+  }
+  
