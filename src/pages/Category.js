@@ -24,8 +24,7 @@ const Category = () => {
   // Pagination
   let [page, setPage] = useState(1);
   const p = page; // for changing the page
-  const PER_PAGE = 20; //num of products shown per page
-  console.log(page);
+  const PER_PAGE = 10; //num of products shown per page
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -252,16 +251,23 @@ const names = [
                   console.log(i);
                   return(
                             <Grid className="grid" sx={{p:0}} key={id}
-                            item xs={6} >
+                            item xs={3} >
                               <ProductCard  product={product} loading={loading} error={error}/>
                             </Grid>
                         )
                 }else return
                     })}
-                      <Pagination data={response} PER_PAGE={PER_PAGE} page={page} setPage={setPage}/>
+                  <Grid 
+                  container
+                  direction="row"
+                  justifyContent="center"
+                  alignItems="center" >
+                    <Pagination data={response} PER_PAGE={PER_PAGE} page={page} setPage={setPage}/>
+                  </Grid>  
               </Grid>
-
             </div>
+                    
+                  
         </div>
     )
 }

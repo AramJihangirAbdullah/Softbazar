@@ -14,7 +14,7 @@ const ProductCard = ({product,error,loading}) => {
 			<h4 ><a className='product_title' href="">{title}</a></h4>
 			<p className='product_des'>{description}</p>
 			<div className="product-bottom-details">
-				<div className="product-price"><small>${price}</small>${price}</div>
+				<div className="product-price"><small>${price+Math.floor(80/price)}</small>${price}</div>
 				<div className="product-links">
 					<a href=""><i><FavoriteIcon/></i></a>
 					<a href=""><i><ShoppingBagIcon/></i></a>

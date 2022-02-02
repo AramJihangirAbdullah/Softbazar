@@ -5,6 +5,7 @@ import Navigation from "./components/Navigation"
 import Main from "./components/Main";
 import Item from "./components/Item";
 import Category from "./pages/Category";
+import Dashboard from "./pages/Dashboard/Dashboard";
 import { AppProvider } from "./contexts/navContext";
 function App() {
   
@@ -13,9 +14,10 @@ function App() {
     <AppProvider>
       <div className="gridLayout">
 
-        <Header />
-        <Navigation/>
-        <Category/>
+        {/* <Header /> */}
+        {/* <Navigation/> */}
+        <Dashboard/>
+        {/* <Category/> */}
         {/* <Main/> */}
         {/* <Item/> */}
         <Footer/>

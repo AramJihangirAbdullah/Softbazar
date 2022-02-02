@@ -1,0 +1,16 @@
+{
+  "dir": "ltr",
+  "r": false,
+  "lan": "Language",
+  "logout": "Logout",
+  "login": "Login",
+  "userName": "User Name",
+  "userNameV": "Please enter your user name!",
+  "password": "Password",
+  "passwordV": "Please enter your Password!",
+  "light": "Light",
+  "dark": "Dark",
+  "home": "Home",
+  "serverError": "Server Error, can't find Error.",
+  "warn": "Warnig!!!"
+}
