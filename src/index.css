@@ -9,9 +9,6 @@
   
 }
 
- body {
-   
-}
 .gridLayout{
   display: grid;
   grid-template-areas:
