@@ -3,9 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
+import { AppProvider } from "./contexts/navContext";
+import { AuthProvider} from "./contexts/AuthContext"
+import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <AuthProvider>
+        <AppProvider>
+          <App />
+        </AppProvider>
+      </AuthProvider>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );

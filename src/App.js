@@ -1,34 +1,27 @@
-import "./App.css";
-import Header from "./components/Header"
-import Footer from "./components/Footer"
-import Navigation from "./components/Navigation"
-import Main from "./components/Main";
+import Main from "./pages/Main";
 import Item from "./components/Item";
 import Category from "./pages/Category";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import Signin from "./pages/LoginPage/Signin";
-import { AppProvider } from "./contexts/navContext";
+import Signin from "./pages/LoginPage/SignIn";
+import Signup from "./pages/LoginPage/SignUp";
+import {Routes,Route} from 'react-router-dom';
+import MailLayout from "./pages/MailLayout";
+import RequireAuth from "./contexts/RequireAuth";
+
 function App() {
   
   return (
-    <>
-    <AppProvider>
-      {/* <div className="gridLayout"> */}
+    <Routes>
+      <Route element={<MailLayout/>}>
+        <Route path="/" element={<Main/>}></Route>
+      </Route>
 
-        {/* <Header />
-        <Navigation/> */}
-        
-        {/* <Category/> */}
-        {/* <Main/> */}
-        {/* <Item/> */}
-        {/* <Footer/> */}
-      {/* </div> */}
-      {/* <Dashboard/> */}
-      <Signin/>
-
-    </AppProvider>
-    
-    </>
+      {/* <Route element={<RequireAuth/>}> */}
+      {/* </Route> */}
+      <Route path="admin-panel" element={<Dashboard/>}></Route>
+      <Route path="login" element={<Signin/>}></Route>
+      <Route path="sign-up" element={<Signup/>}></Route>
+    </Routes>
   );
 }
 

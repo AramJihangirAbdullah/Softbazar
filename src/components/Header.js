@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapPin , faSearch , faBars } from '@fortawesome/free-solid-svg-icons'
 import { faHeart } from '@fortawesome/free-regular-svg-icons'
 import { useNavContext } from "../contexts/navContext";
+import Usernav from './Usernav';
 
 const Header = () => {
     const { toggleNav } = useNavContext();
@@ -19,9 +20,7 @@ const Header = () => {
                 <input id="search" type="text" />
                 <button id="searchbtn"><i><FontAwesomeIcon icon={faSearch} /></i></button>
             </div>
-            <a href="registration.php" className="hide">
-                <img src={logimg} alt="login" width="35" style={{marginTop:"5px"}} />
-            </a>
+            <Usernav logimg={logimg}></Usernav>
             <i className="hide"><FontAwesomeIcon icon={faHeart}  style={{fontSize: "xx-large",color: "var(--orange)"}} /></i>
             <i className="hide">
             <svg width="30" height="33" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{fontSize: "xx-large" , color: "var(--orange)"}}>

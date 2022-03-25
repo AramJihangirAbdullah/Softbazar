@@ -12,12 +12,13 @@ import "../../css/dashboard.css";
 
 function Dashboard() {
   return (
-    <Router>
+    <>
+    {/* pathakan chakka wahshy */}
       <Topbar />
       <div className="container">
         <Sidebar />
         <Routes>
-          <Route exact path="/" element={<Home />}>
+          <Route path="/" element={<Home />}>
           </Route>
           <Route path="/users" element={<UserList />}>
           </Route>
@@ -36,7 +37,7 @@ function Dashboard() {
           </Route>
         </Routes>
       </div>
-    </Router>
+    </>
   );
 }
 

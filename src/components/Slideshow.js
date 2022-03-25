@@ -1,43 +1,35 @@
-import React,{useState,useEffect} from 'react'
-import Slider from "react-slick";
-const Slideshow = () => {
-    const settings = {
-        dots: true,
-        infinite: true,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        autoplay: true,
-        speed: 2000,
-        autoplaySpeed: 2000,
-        cssEase: "linear"
-      };
+import React from 'react';
+import Carousel from 'react-material-ui-carousel'
+import { Paper, Button } from '@mui/material'
+
+const Slideshow = () => {  
+  var items = [
+    {
+        name: "Random #1",
+        description: "D:/LearnPath/Reactjs/test/test 3/softbazar/src/images/slideshow/p1.jpg"
+    },
+    {
+        name: "Random Name #2",
+        description: "../images/slideshow/p2.jpg"
+    }
+]
     return (
-        <div>
-        <h2>Auto Play</h2>
-        <Slider {...settings}>
-          <div>
-            <h3>1</h3>
-          </div>
-          <div>
-            <h3>2</h3>
-          </div>
-          <div>
-            <h3>3</h3>
-          </div>
-          <div>
-            <h3>4</h3>
-          </div>
-          <div>
-            <h3>5</h3>
-          </div>
-          <div>
-            <h3>6</h3>
-          </div>
-        </Slider>
-      </div>
+      <Carousel sx={{width:2/3,backgroundColor:"green"}}>
+
+            {
+                items.map( (item, i) => <Item key={i} item={item} /> )
+            }
+        </Carousel>
     )
 }
-
+function Item(props)
+{
+    return (
+        <Paper>
+            <img src={props.item.description} alt={props.item.name} />
+        </Paper>
+    )
+}
 export default Slideshow
 
 

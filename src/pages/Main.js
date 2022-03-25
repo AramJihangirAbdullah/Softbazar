@@ -1,11 +1,11 @@
-import React,{useEffect,useRef} from 'react'
+import React,{useEffect,useRef , useContext} from 'react'
 import "../css/main.css";
 import { links } from "../data/dslideshow";
-import Deal from "./Deal";
-import Ldeal from "./Ldeal";
+import Deal from "../components/Deal";
+import Ldeal from "../components/Ldeal";
 import { AppProvider } from "../contexts/context";
 import { useNavContext } from "../contexts/navContext";
-import Slideshow from './Slideshow';
+import Slideshow from '../components/Slideshow';
 
 const Main = () => {
     
@@ -45,7 +45,7 @@ const Main = () => {
                 })}
             </div>
             
-            {/* <Slideshow/> */}
+            <Slideshow/>
         </div>
         {/* <!-- deals --> */}
             <AppProvider>
