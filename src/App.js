@@ -1,6 +1,7 @@
 import Main from "./pages/Main";
 import Item from "./components/Item";
 import Category from "./pages/Category";
+import Whishlist from "./pages/Whishlist";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Signin from "./pages/LoginPage/SignIn";
 import Signup from "./pages/LoginPage/SignUp";
@@ -26,6 +27,7 @@ function App() {
         <Route path="/" element={<Main/>}></Route>
         {/* <Route path="products" element={<Category/>}></Route> */}
         <Route path="products" element={<Category/>}></Route>
+        <Route path="whishlist" element={<Whishlist/>}></Route>
         <Route path="product/:productName" element={ <Item/> } />
       </Route>
       

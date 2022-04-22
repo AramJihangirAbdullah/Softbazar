@@ -145,7 +145,7 @@ const Input = styled('input')({
                 onChange={handleChanges}
                 >
                   {names.map((name,i) => (
-                    <MenuItem key={name} value={i+1}>{name}</MenuItem>
+                    <MenuItem key={name.name} value={name.id}>{name.name}</MenuItem>
                   ))}
                 </Select>
             </FormControl>

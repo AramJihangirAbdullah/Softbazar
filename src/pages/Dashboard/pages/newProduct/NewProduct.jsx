@@ -196,7 +196,7 @@ const [valuedate, setValuedate] = React.useState(new Date(' '));
                 onChange={handleChanges}
                 >
                   {names.map((name,i) => (
-                    <MenuItem key={name} value={i+1}>{name}</MenuItem>
+                    <MenuItem key={name.id} value={name.id}>{name.name}</MenuItem>
                   ))}
                 </Select>
             </FormControl>

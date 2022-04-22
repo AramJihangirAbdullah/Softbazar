@@ -1,6 +1,5 @@
 import React, { useState , useEffect } from 'react'
 import '../css/item.css';
-import { useParams } from 'react-router-dom';
 import Cookies from 'js-cookie'
 import axios from 'axios';
 
@@ -10,64 +9,80 @@ import {
 import Rating from './Rating';
 
 const Item = () => {
-    const [alldata, setAlldata] = useState({})
+    const [alldata, setAlldata] = useState([])
+    const [allimg, setAllimg] = useState([])
+    const [load, setLoad] = useState(true)
+    // const [showImg, setShowImg] = useState('')
+    let showImg;
     // const { productName} = useParams();
-    let getprod = async ()=>{
-        await axios.get(`http://localhost:8000/api/products/${Cookies.get('product_id')}`)
-       .then((response) => {
-         setAlldata(response.data);
-         console.log("resa");
-         console.log(alldata);
-       }, (error) => {
-         console.log(error);
-       });
-       }
-       useEffect(() => {
-           getprod()
-       }, []);
-    //    function modifyimage(jsonObj) {
-    //     let words=[];
-    //     let dom = 'http://127.0.0.1:8000/uploads/images/'
-    //       let datajson = jsonObj.image.slice(1, -1);
-    //          words = datajson.split(',');
-    //          jsonObj.img = dom + words[0].slice(1, -1);
-    //       console.log(jsonObj);
-    //         return jsonObj;
-    //   }
+    let getprod = async (id)=>{
+        await axios.get(`http://localhost:8000/api/products/${id}`)
+        .then( (response) => {
+             setAlldata(modifyimage(response.data));
+             setLoad(false)
+            console.log("resa");
+            console.log(alldata);
+        }, (error) => {
+            console.log(error);
+        });
+    }
+    
+    useEffect(() => {
+        if (load) {
+            getprod(Cookies.get('product_id'))
+            
+        }
+    }, [load]);
+    function modifyimage(jsonObj) {
+        let words=[];
+        let dom = 'http://127.0.0.1:8000/uploads/images/'
+        let datajson = jsonObj.image.slice(1, -1);
+        words = datajson.split(',');
+        setAllimg(words.map(x => x.slice(1,-1)))
+        jsonObj.img = dom + words[0].slice(1, -1);
+          console.log(jsonObj);
+            return jsonObj;
+      }
     //   console.log(modifyimage(alldata));
-       console.log(alldata);
+       
        //    console.log(alldata.image.slice(1, -1).split(','));
-       const data = [{imageSrc:'p1.jpg',imageAlt:'image'},{imageSrc:'p2.jpg',imageAlt:'image'},{imageSrc:'p3.jpg',imageAlt:'image'},{imageSrc:'p4.png',imageAlt:'image'}]
-       const dataa = [alldata.img]
-       console.log(dataa);
+    //    const data = [{imageSrc:'p1.jpg',imageAlt:'image'},{imageSrc:'p2.jpg',imageAlt:'image'},{imageSrc:'p3.jpg',imageAlt:'image'},{imageSrc:'p4.png',imageAlt:'image'}]
+       const data = allimg
+        
+        console.log("data");
+        showImg = allimg[0]
+        console.log(showImg);
     //    const data = alldata.image;
     // if (alldata) {
     //     // let fidata = alldata.image.split(',')
     // } 
-       
-    const [showImg, setShowImg] = useState(data[0].imageSrc);
+
+    
     const [quantity, setQuantity] = useState(0);
-    const [images, setImages] = useState(data)
+    const [datt, setDatt] = useState(allimg[0]);
+    const [images, setImages] = useState(allimg)
     const imgClick = (e)=>{
-        setShowImg(data[e.target.alt].imageSrc)
+        showImg = (data[e.target.alt])
+        setDatt(showImg)
     }
     
     return (
-        <div id="main"> 
+        !load && (<div id="main"> 
         <div className="top">
             <div className="magni">
                 <div id="picholder">
                     <GlassMagnifier
-                    imageSrc={ require(`../images/slideshow/${showImg}`).default}
-                    imageAlt="Example"
-                    largeImageSrc={ require(`../images/slideshow/${showImg}`).default}
+                    imageSrc={`http://127.0.0.1:8000/uploads/images/${datt || showImg}`}
+                    imageAlt={alldata.name}
+                    largeImageSrc={`http://127.0.0.1:8000/uploads/images/${datt || showImg}`}
                     />
                 </div>
                 <div className="smimgHold">
                     <ul className="smimgholder">
-                        {images.map((image,index)=>{
+                        {allimg.map((image,index)=>{
                             return (
-                            <li><img onClick={imgClick} src={require(`../images/slideshow/${image.imageSrc}`).default} alt={`${index}`} /></li>
+                                console.log(image.slice(1, -1)),
+                            <li><img onClick={imgClick} src={`http://127.0.0.1:8000/uploads/images/${image}`} alt={`${index}`} /></li>
                             )
                         })}
                     </ul>
@@ -145,7 +160,7 @@ const Item = () => {
                 <span id="offer6">Get %40 discount avove $250</span>
             </div>
         </div>
-    </div>
+    </div>)
     )
 }
 

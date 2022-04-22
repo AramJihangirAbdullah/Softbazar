@@ -27,7 +27,7 @@ import {  useNavigate } from "react-router-dom";
 
 
 
-const Category = () => {
+const Whishlist = () => {
   function modifyimage(jsonObj) {
     let words=[];
     let dom = 'http://127.0.0.1:8000/uploads/images/'
@@ -42,24 +42,15 @@ const Category = () => {
   // fetch data
   const [response, setResponse] = useState([])
   const [data, setData] = useState([])
-  let getsearch = async (search)=>{
-    await axios.get(`http://localhost:8000/api/products/search/${search}`)
+  let getsearch = async ()=>{
+    await axios.get(`http://localhost:8000/api/favourites`)
    .then((response) => {
-     setData(modifyimage(response.data.data))
-     setResponse(modifyimage(response.data.data))
+     console.log(response)
+     setData((response.data))
    }, (error) => {
      console.log(error);
    });
    }
-   async function search(search){
-    await axios.get(`http://localhost:8000/api/products/search/${search}`)
-    .then((response) => {
-      setData(modifyimage(response.data.data))
-      setResponse(modifyimage(response.data.data))
-    }, (error) => {
-      console.log(error);
-    });
-  }
   const navigate = useNavigate();
 
     const subsubm = (id,name)=>{
@@ -79,8 +70,11 @@ console.log(names);
       setRating(event.target.value);
     };
    useEffect(() => {
-    getsearch(Cookies.get('search'))
-    getCategory()
+    //  if (category) {
+       
+       getsearch()
+      
+      getCategory()
 
    }, []);
   // Pagination
@@ -284,13 +278,7 @@ console.log(names);
               </Popover>
               
               </div>
-              <TextField
-                id="outlined-name"
-                name='type'
-                label={`Search`}
-                onChange={(e)=>search(e.target.value)}
-                sx={{width:"30%",margin:2}}
-              />
+              
               <div className="sort">
                 <Button className="filsortbtn" sx={{ minWidth: 0.99/1, m: 1,bgcolor:"var(--orange)"}} aria-describedby={ids} variant="contained" onClick={handleClick}>
                   Sort
@@ -381,4 +369,4 @@ console.log(names);
 }
 
 
-export default Category
+export default Whishlist

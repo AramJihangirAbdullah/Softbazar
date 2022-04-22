@@ -19,7 +19,7 @@ axios.interceptors.request.use(function (config){
 const loopi=(data)=>{
   let arr = []
   for (let i = 0; i < data.length; i++) {
-    arr[i] = data[i].name
+    arr[i] = {id:data[i].id,name:data[i].name}
   }
   return(arr);
 }
@@ -170,6 +170,7 @@ export const AuthProvider = ({children}) => {
     axios.get('http://localhost:8000/api/categories')
   .then(function (response) {
       setCategory(loopi(response.data))
+      alert(category)
   })
   .catch(function (error) {
     // handle error
