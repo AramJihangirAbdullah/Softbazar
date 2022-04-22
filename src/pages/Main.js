@@ -5,7 +5,7 @@ import Deal from "../components/Deal";
 import Ldeal from "../components/Ldeal";
 import { AppProvider } from "../contexts/context";
 import { useNavContext } from "../contexts/navContext";
-import Slideshow from '../components/Slideshow';
+import Carousell from '../components/Carousell';
 
 const Main = () => {
     
@@ -44,8 +44,9 @@ const Main = () => {
                     )
                 })}
             </div>
-            
-            <Slideshow/>
+            <div  id='slide'>
+                <Carousell/>
+            </div>
         </div>
         {/* <!-- deals --> */}
             <AppProvider>

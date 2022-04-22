@@ -1,14 +1,16 @@
 import React from 'react';
 import Variant from './Variant';
-const Variants = ({variants , onDelete}) => {
+const Variants = ({variantnum}) => {
+  console.log(variantnum);
+  const loop = ()=>{
+    for (let i = 1; i <= variantnum; i++) {
+      <Variant/>
+      console.log("hello")
+    }
+  }
     return (
         <>
-          {variants.map((variant,index) => (
-            <Variant key={index} variant={variant}
-             onDelete={onDelete}
-             />
-          ))
-          }
+          {loop()}
         </>
       );
 };

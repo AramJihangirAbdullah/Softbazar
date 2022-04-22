@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState,useEffect,useContext} from 'react'
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -16,11 +16,72 @@ import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
-import useFetch from '../components/customHooks/useFetch'
 import '../css/category.css'
 import ProductCard from '../components/ProductCard';
 import Pagination from '../components/Paginatoin';
+import axios from 'axios';
+import Cookies from 'js-cookie'
+import AuthContext  from "../contexts/AuthContext";
+import { Link } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
+
+
+
 const Category = () => {
+  function modifyimage(jsonObj) {
+    let words=[];
+    let dom = 'http://127.0.0.1:8000/uploads/images/'
+    for (var i = 0; i < jsonObj.length; i++) {
+      let datajson = jsonObj[i].image.slice(1, -1);
+         words = datajson.split(',');
+         jsonObj[i].img = dom +  words[0].slice(1, -1);
+      }
+      console.log(jsonObj);
+        return jsonObj;
+  }
+  // fetch data
+  const [response, setResponse] = useState([])
+  const [data, setData] = useState([])
+  let getsearch = async (search)=>{
+    await axios.get(`http://localhost:8000/api/products/search/${search}`)
+   .then((response) => {
+     setData(modifyimage(response.data.data))
+     setResponse(modifyimage(response.data.data))
+   }, (error) => {
+     console.log(error);
+   });
+   }
+   async function search(search){
+    await axios.get(`http://localhost:8000/api/products/search/${search}`)
+    .then((response) => {
+      setData(modifyimage(response.data.data))
+      setResponse(modifyimage(response.data.data))
+    }, (error) => {
+      console.log(error);
+    });
+  }
+  const navigate = useNavigate();
+
+    const subsubm = (id,name)=>{
+        Cookies.set('product_id',id);
+        navigate("../product/" + name)
+    }
+  // get category list
+let {getCategory,category} = useContext(AuthContext)
+let names = []
+names = category;
+    const [minMoney, setMinMoney] = useState('')
+    const [maxMoney, setMaxMoney] = useState('')
+    const [rating, setRating] = React.useState('');
+
+    const handleChange = (event) => {
+      setRating(event.target.value);
+    };
+   useEffect(() => {
+    getsearch(Cookies.get('search'))
+    getCategory()
+
+   }, []);
   // Pagination
   let [page, setPage] = useState(1);
   const p = page; // for changing the page
@@ -52,8 +113,21 @@ const Category = () => {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
     
-    const handleFilterbtn =()=>{setAnchorEl(null)}
-    
+    const handleFilterbtn =()=>{
+      if (minMoney && maxMoney) {
+        setResponse(data.filter(word => word.price >= minMoney && word.price <= maxMoney ))
+      }
+      else if (minMoney) {
+        setResponse(data.filter(word => word.price >= minMoney))
+      }
+      else if (maxMoney) {
+        setResponse(data.filter(word => word.price <= maxMoney))
+      }
+      
+
+    }
+  
+      
 // sorting
   const [anchorEls, setAnchorEls] = React.useState(null);
 
@@ -74,31 +148,7 @@ const Category = () => {
     setSelectedIndex(index);
   };
 
-// fetching
-const url = 'https://fakestoreapi.com/products'
-const { response, loading, error } = useFetch(url)
-console.log(response );
-
 // rating
-    const [rating, setRating] = React.useState('');
-
-    const handleChange = (event) => {
-      setRating(event.target.value);
-    };
-
-const names = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
-  ];
-
   const [personName, setPersonName] = React.useState([]);
 
   const handleBrand = (event) => {
@@ -132,6 +182,7 @@ const names = [
                 horizontal: 'center',
               }}
               >
+              
                   <Typography  sx={{width: "38vw", m: 1,p:1}}>
                     <Grid container spacing={1}>
                       <Grid xs={12}>
@@ -157,7 +208,7 @@ const names = [
                       <Grid xs={12}>
                       <Box sx={{m : 1}}>
                         <FormControl fullWidth >
-                            <InputLabel  id="demo-multiple-checkbox-label">Brands</InputLabel>
+                            <InputLabel  id="demo-multiple-checkbox-label">Categories</InputLabel>
                             <Select
                             sx={{minWidth: 150,width:1/1}}
                             labelId="demo-multiple-checkbox-label"
@@ -182,8 +233,8 @@ const names = [
                       <Grid xs={12} sx={{ m : 1}}>
                         <fieldset style={{border:'1px #ccc solid'}}>
                           <legend>&nbsp;Money&nbsp;</legend>
-                          <TextField type="number" label="Min" sx={{width: 80,m:1}}  />
-                          <TextField type="number" label="Max" sx={{width: 80,m:1}}  />
+                          <TextField value={minMoney} onChange={(e)=>{setMinMoney(e.target.value);}} type="number" label="Min" sx={{width: 80,m:1}}  />
+                          <TextField value={maxMoney} onChange={(e)=>{setMaxMoney(e.target.value)}} type="number" label="Max" sx={{width: 80,m:1}}  />
                         </fieldset>
                       </Grid>
                       <Grid xs={12} sx={{ m : 1}}>
@@ -197,6 +248,13 @@ const names = [
               </Popover>
               
               </div>
+              <TextField
+                id="outlined-name"
+                name='type'
+                label={`Search`}
+                onChange={(e)=>search(e.target.value)}
+                sx={{width:"30%",margin:2}}
+              />
               <div className="sort">
                 <Button className="filsortbtn" sx={{ minWidth: 0.99/1, m: 1,bgcolor:"var(--orange)"}} aria-describedby={ids} variant="contained" onClick={handleClick}>
                   Sort
@@ -229,13 +287,26 @@ const names = [
                           selected={selectedIndex === 1}
                           onClick={(event) => handleListItemClick(event, 1)}
                         >
-                          <ListItemText primary="Rating" />
+                          <ListItemText primary="Oldest" />
+                        </ListItemButton>
+                        <ListItemButton
+                          selected={selectedIndex === 2}
+                          onClick={(event) => handleListItemClick(event, 2)}
+                        >
+                          <ListItemText primary="Chipest" />
+                        </ListItemButton>
+                        <ListItemButton
+                          selected={selectedIndex === 3}
+                          onClick={(event) => handleListItemClick(event, 3)}
+                        >
+                          <ListItemText primary="Most Expensive" />
                         </ListItemButton>
                       </List>
                     </Box>
                   </Typography>
                 </Popover>
             </div>
+            
             </div>
             <div className="products">
 
@@ -248,11 +319,12 @@ const names = [
               {response.map((product,i)=>{
                 if(PER_PAGE*p-PER_PAGE<=i && i<p*PER_PAGE){
                   const {id} = product;
-                  console.log(i);
                   return(
                             <Grid className="grid" sx={{p:0}} key={id}
                             item xs={3} >
-                              <ProductCard  product={product} loading={loading} error={error}/>
+                                <ProductCard subsubm={subsubm} product={product} 
+                                // loading={loading} error={error}
+                                />
                             </Grid>
                         )
                 }else return

@@ -1,18 +1,57 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
 import '../css/item.css';
+import { useParams } from 'react-router-dom';
+import Cookies from 'js-cookie'
+import axios from 'axios';
+
 import {
     GlassMagnifier
 } from "react-image-magnifiers";
 import Rating from './Rating';
+
 const Item = () => {
-    const data = [{imageSrc:'p1.jpg',imageAlt:'image'},{imageSrc:'p2.jpg',imageAlt:'image'},{imageSrc:'p3.jpg',imageAlt:'image'},{imageSrc:'p4.png',imageAlt:'image'}]
+    const [alldata, setAlldata] = useState({})
+    // const { productName} = useParams();
+    let getprod = async ()=>{
+        await axios.get(`http://localhost:8000/api/products/${Cookies.get('product_id')}`)
+       .then((response) => {
+         setAlldata(response.data);
+         console.log("resa");
+         console.log(alldata);
+       }, (error) => {
+         console.log(error);
+       });
+       }
+       useEffect(() => {
+           getprod()
+       }, []);
+    //    function modifyimage(jsonObj) {
+    //     let words=[];
+    //     let dom = 'http://127.0.0.1:8000/uploads/images/'
+    //       let datajson = jsonObj.image.slice(1, -1);
+    //          words = datajson.split(',');
+    //          jsonObj.img = dom + words[0].slice(1, -1);
+    //       console.log(jsonObj);
+    //         return jsonObj;
+    //   }
+    //   console.log(modifyimage(alldata));
+       console.log(alldata);
+       //    console.log(alldata.image.slice(1, -1).split(','));
+       const data = [{imageSrc:'p1.jpg',imageAlt:'image'},{imageSrc:'p2.jpg',imageAlt:'image'},{imageSrc:'p3.jpg',imageAlt:'image'},{imageSrc:'p4.png',imageAlt:'image'}]
+       const dataa = [alldata.img]
+       console.log(dataa);
+    //    const data = alldata.image;
+    // if (alldata) {
+    //     // let fidata = alldata.image.split(',')
+    // } 
+       
     const [showImg, setShowImg] = useState(data[0].imageSrc);
     const [quantity, setQuantity] = useState(0);
     const [images, setImages] = useState(data)
     const imgClick = (e)=>{
         setShowImg(data[e.target.alt].imageSrc)
     }
-
+    
     return (
         <div id="main"> 
         <div className="top">
@@ -38,9 +77,9 @@ const Item = () => {
             <div className="details">
                 <div className="detail1">
                     <div className="part">
-                        <span className="prod_company">Defacto</span>
-                        <span className="money">$58.25</span> <br/>
-                        <span className="prod_detail">short discription of the product and some details to be added.</span>
+                        <span className="prod_company">{alldata.name}</span>
+                        <span className="money">  ${alldata.price}</span> <br/>
+                        <span className="prod_detail">{alldata.description}</span>
                         <br/>
                         <div className="rating_show">
                                 <Rating rate={4}/>
@@ -62,27 +101,25 @@ const Item = () => {
                             <input onuparr id="inp_num" type="number" value={quantity} min="0" max="100" onChange={()=>{ setQuantity(quantity+1) }}/>
                             <button id="btn_plus" className="btns" onClick={()=>{setQuantity((pre)=>pre+1)}} >+</button>
                         </div>
-                        <span className="header">Size:</span>
+                        <span className="header">Taste:</span>
                         <span className="selectedview" id="size"></span>
                         {/* <!-- Size --> */}
                         <div className="size">
-                            <button className="size_btn" value="XS">XS</button>
-                            <button className="size_btn" value="S">S</button>
-                            <button className="size_btn" value="M">M</button>
-                            <button className="size_btn" value="L">L</button>
-                            <button className="size_btn" value="XL">XL</button>
-                            <button className="size_btn" value="XXL">XXL</button>
+                            <button className="size_btn" value="XS">Onion</button>
+                            <button className="size_btn" value="S">Tomato</button>
+                            <button className="size_btn" value="M">Peper</button>
+                            <button className="size_btn" value="L">Cheese</button>
                         </div>
                         {/* <!-- Color --> */}
-                        <span className="header">Color:</span>
-                        <span className="selectedview" id="color"></span>
-                        <div className="color">
+                        {/* <span className="header">Color:</span>
+                        <span className="selectedview" id="color"></span> */}
+                        {/* <div className="color">
                             <button className="color_btn" value="black"><img src="color_black.webp" alt="black"/></button>
                             <button className="color_btn" value="brown"><img src="color_brown.webp" alt="brown"/></button>
                             <button className="color_btn" value="maroni"><img src="color_maron.webp" alt="maroni"/></button>
                             <button className="color_btn" value="black"><img src="color_black.webp" alt="black"/></button>
                             <button className="color_btn" value="brown"><img src="color_brown.webp" alt="brown"/></button>
-                        </div>
+                        </div> */}
                         
                     </div>
                     <div className="part">

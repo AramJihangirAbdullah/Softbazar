@@ -1,12 +1,20 @@
-import React from 'react'
+import React,{useState} from 'react'
 import logimg from "../images/abs.svg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapPin , faSearch , faBars } from '@fortawesome/free-solid-svg-icons'
 import { faHeart } from '@fortawesome/free-regular-svg-icons'
 import { useNavContext } from "../contexts/navContext";
 import Usernav from './Usernav';
+import {  useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie'
 
 const Header = () => {
+    const [searchh, setSearchh] = useState('')
+    const navigate = useNavigate();
+    const subsubm = ()=>{
+        Cookies.set('search',searchh);
+        navigate("/products")
+    }
     const { toggleNav } = useNavContext();
     return (
         <header>
@@ -17,8 +25,8 @@ const Header = () => {
                 <span>Erbil</span>
             </div>
             <div id="searchpa">
-                <input id="search" type="text" />
-                <button id="searchbtn"><i><FontAwesomeIcon icon={faSearch} /></i></button>
+                <input style={{color:"white"}} id="search" type="text" onChange={(e)=>{setSearchh(e.target.value)}} />
+                <button id="searchbtn"><i><FontAwesomeIcon icon={faSearch} onClick={subsubm} /></i></button>
             </div>
             <Usernav logimg={logimg}></Usernav>
             <i className="hide"><FontAwesomeIcon icon={faHeart}  style={{fontSize: "xx-large",color: "var(--orange)"}} /></i>

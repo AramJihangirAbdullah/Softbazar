@@ -1,26 +1,55 @@
-import React from 'react';
-import TextInput from '../../components/TextInput';
+import React,{useContext} from 'react';
+import TextField from '@mui/material/TextField';
+
 import Button from '@mui/material/Button';
 import Delete from '@mui/icons-material/Delete';
-
+import Checkbox from '@mui/material/Checkbox';
 import ReactTagInput from "@pathofdev/react-tag-input";
 import "@pathofdev/react-tag-input/build/index.css";
 import "./variant.css";
-const Variant = ({variant , onDelete}) => {
-    
+import AuthContext  from "../../../../contexts/AuthContext";
+
+const Variant = ({i,getData}) => {
+  const [option, setOption] = React.useState("")
   const [tags, setTags] = React.useState([])
-  return <div id={variant.id} className="variantHolder">
-  <TextInput label={`Option${variant.id}`} />
+  let {variantdone,setVariantdone} = useContext(AuthContext)
+
+  console.log(tags);
+  // console.log(variantdone);
+//checkbox
+  // const handleChange = (event) => {
+  //   setChecked(event.target.checked);
+  // };
+console.log(option);
+  const handletags = (newTags)=>{
+    setTags(newTags);
+    // getData(option,tags);
+  }
+  const handleoption = (e)=>{
+    setOption(e.target.value)
+    setVariantdone()
+  }
+  return <div  className="variantHolder">
+  {/* <TextInput value={option} onChange={handleoption} label={`Option${i+1}`} /> */}
+  <TextField
+        id="outlined-name"
+        label={`Option${i+1}`}
+        value={option}
+        onChange={handleoption}
+      />
   <ReactTagInput 
       tags={tags} 
-      onChange={(newTags) => setTags(newTags)}
+      onChange={handletags}
       removeOnBackspace={true}
+      
     />
-  <Button onClick={()=> onDelete(variant.id)}>
-    <Delete sx={{m : 1}}/>
-  </Button>
-  {variant.id}
+  {/* <Checkbox
+      checked={checked}
+      onChange={handleChange}
+      inputProps={{ 'aria-label': 'controlled' }}
+    />   */}
 </div>
+
 };
 
 export default Variant;

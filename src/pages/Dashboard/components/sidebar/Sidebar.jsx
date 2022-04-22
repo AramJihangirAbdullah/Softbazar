@@ -14,13 +14,22 @@ import {
   Report,
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import HistoryIcon from '@mui/icons-material/History';
+import CategoryIcon from '@mui/icons-material/Category';
+import { useContext } from "react";
+import AuthContext from '../../../../contexts/AuthContext'
+
+
 
 export default function Sidebar() {
+
+  let {role} = useContext(AuthContext)
+
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Dashboard</h3>
+          <h3 className="sidebarTitle"></h3>
           <ul className="sidebarList">
             <Link to="" className="link">
             <li className="sidebarListItem active">
@@ -41,18 +50,36 @@ export default function Sidebar() {
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Quick Menu</h3>
           <ul className="sidebarList">
-            <Link to="users" className="link">
+            {role==0 && <Link to="Venders" className="link">
+              <li className="sidebarListItem">
+                <PermIdentity className="sidebarIcon" />
+                Venders
+              </li>
+            </Link>}
+            {role==0 && <Link to="users" className="link">
               <li className="sidebarListItem">
                 <PermIdentity className="sidebarIcon" />
                 Users
               </li>
-            </Link>
+            </Link>}
+            {role==0 && <Link to="history" className="link">
+              <li className="sidebarListItem">
+                <HistoryIcon className="sidebarIcon" />
+                history
+              </li>
+            </Link>}
             <Link to="products" className="link">
               <li className="sidebarListItem">
                 <Storefront className="sidebarIcon" />
                 Products
               </li>
             </Link>
+            {role==0 && <Link to="category" className="link">
+              <li className="sidebarListItem">
+                <CategoryIcon className="sidebarIcon" />
+                Categories
+              </li>
+            </Link>}
             <li className="sidebarListItem">
               <AttachMoney className="sidebarIcon" />
               Transactions

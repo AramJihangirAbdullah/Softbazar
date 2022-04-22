@@ -1,14 +1,14 @@
 import React from 'react'
 
-const LdealProduct = ({id, image, price,title}) => {
+const LdealProduct = ({id, img, price,name}) => {
     return (
         <div className="Lproduct">
             <div className="productimg">
-                <img  src={image} alt={title} />
+                <img  src={`${img}`} alt={name} />
             </div>
             <div className="price">
-                <span>${price}</span>
-                <span className="dis">35%</span>
+                <span >{name}</span>
+                <span className="dis">${price}</span>
             </div>
         </div>
     )

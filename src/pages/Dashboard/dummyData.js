@@ -1,3 +1,17 @@
+// import axios from 'axios';
+// import React, {useContext} from 'react'
+// import AuthContext from '../../contexts/AuthContext'
+
+// const dummyData = () => {
+//   let {whoami,role,user,logoutUser} = useContext(AuthContext)
+
+//   return (
+//     <></>
+//   )
+// }
+
+// export default dummyData
+
 export const userData = [
     {
       name: "Jan",

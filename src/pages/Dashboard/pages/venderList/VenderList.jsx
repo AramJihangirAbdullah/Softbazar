@@ -1,9 +1,13 @@
 import "./userList.css";
-import React, {useEffect} from 'react'
+import React, {useContext,useEffect} from 'react'
+import AuthContext from '../../../../contexts/AuthContext'
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
+import { userRows } from "../../dummyData";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from 'axios';
+import Switch from '@mui/material/Switch';
 
 export default function UserList() {
   // let {vendorId} = useContext(AuthContext)
@@ -16,11 +20,11 @@ export default function UserList() {
   }, [])
 
   let getven = async ()=>{
-    await axios.get(`http://localhost:8000/api/users`)
+    await axios.get(`http://localhost:8000/api/venders`)
    .then((response) => {
      console.log("res");
      console.log(response);
-     setData((response.data).filter((item) => item.role === 2));
+     setData(response.data);
    }, (error) => {
      console.log(error);
    });
@@ -49,7 +53,7 @@ export default function UserList() {
     { field: "id", headerName: "ID", width: 90 },
     {
       field: "name",
-      headerName: "User",
+      headerName: "Venders",
       width: 200,
       renderCell: (params) => {
         return (
@@ -60,7 +64,19 @@ export default function UserList() {
       },
     },
     { field: "email", headerName: "Email", width: 200 },
-    { field: "created_at", headerName: "Joined at", width: 180 },
+    {
+      field: "activation",
+      headerName: "Status",
+      width: 120,
+      renderCell: (params) => {
+        return (
+          <div className="userListUser">
+            { (params.row.activation==1)?"Active":"Not Active"} 
+             
+          </div>
+        );
+      },
+    },
     {
       field: "action",
       headerName: "Action",
@@ -68,6 +84,11 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <>
+            <Switch
+              checked={checked}
+              onChange={handleChange}
+              inputProps={{ 'aria-label': 'controlled' }}
+            />
             <DeleteOutline
               className="userListDelete"
               onClick={() => handleDelete(params.row.id)}

@@ -3,6 +3,7 @@ import DealProduct from "./DealProduct";
 import { useGlobalContext } from "../contexts/context";
 const Deal = ({title}) => {
     const { products } = useGlobalContext();
+    
     return (
         <div className="deal">
                 <div className="deal_header">

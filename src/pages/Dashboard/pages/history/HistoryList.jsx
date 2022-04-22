@@ -1,7 +1,6 @@
 import "./userList.css";
 import React, {useEffect} from 'react'
 import { DataGrid } from "@material-ui/data-grid";
-import { DeleteOutline } from "@material-ui/icons";
 import { useState } from "react";
 import axios from 'axios';
 
@@ -16,11 +15,11 @@ export default function UserList() {
   }, [])
 
   let getven = async ()=>{
-    await axios.get(`http://localhost:8000/api/users`)
+    await axios.get(`http://localhost:8000/api/histories`)
    .then((response) => {
      console.log("res");
      console.log(response);
-     setData((response.data).filter((item) => item.role === 2));
+     setData(response.data);
    }, (error) => {
      console.log(error);
    });
@@ -48,31 +47,50 @@ export default function UserList() {
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
-      field: "name",
-      headerName: "User",
+      field: "type",
+      headerName: "Type",
       width: 200,
       renderCell: (params) => {
         return (
           <div className="userListUser">
-            {params.row.name}
+            {params.row.type}
           </div>
         );
       },
     },
-    { field: "email", headerName: "Email", width: 200 },
-    { field: "created_at", headerName: "Joined at", width: 180 },
     {
-      field: "action",
-      headerName: "Action",
-      width: 150,
+      field: "data",
+      headerName: "data",
+      width: 200,
       renderCell: (params) => {
         return (
-          <>
-            <DeleteOutline
-              className="userListDelete"
-              onClick={() => handleDelete(params.row.id)}
-            />
-          </>
+          <div className="userListUser">
+            {(params.row.data).split(',')[2]}
+          </div>
+        );
+      },
+    },
+    {
+      field: "table",
+      headerName: "Table",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <div className="userListUser">
+            {params.row.table}
+          </div>
+        );
+      },
+    },
+    {
+      field: "created_at",
+      headerName: "Date/Time",
+      width: 130,
+      renderCell: (params) => {
+        return (
+          <div className="userListUser">
+            {params.row.created_at}
+          </div>
         );
       },
     },

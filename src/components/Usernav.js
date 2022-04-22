@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext,useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import AuthContext from '../contexts/AuthContext'
 import Avatar from '@mui/material/Avatar';
@@ -10,10 +10,13 @@ import { Box } from '@mui/system';
 import Cookies from 'js-cookie'
 
 const Usernav = ({logimg}) => {
-  let {whoami,user,logoutUser} = useContext(AuthContext)//?
-  console.log( whoami(Cookies.get('barear_token')) );
-  
-  console.log("hsha",user);
+  let {whoami,role,user,logoutUser} = useContext(AuthContext)//?
+
+  useEffect(() => {
+    whoami(Cookies.get('barear_token'))
+
+  }, [])
+  console.log(role,user);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -57,8 +60,8 @@ const Usernav = ({logimg}) => {
       <Typography sx={{p: 1 , textAlign:"center"}}>My Account</Typography>
       <Typography sx={{p: 1 , textAlign:"center"}}>Orders</Typography>
       <Typography sx={{p: 1 , textAlign:"center"}}>Wish List</Typography>
-      <Typography sx={{p: 1 , textAlign:"center"}}><Link to="admin-panel">Admin Panel</Link></Typography>
-      <Typography onClick={logoutUser} sx={{p: 1 , textAlign:"center"}}>Sign Out</Typography>
+      {(role == 1 || role == 0) &&   <Typography sx={{p: 1 , textAlign:"center"}}><Link to="admin-panel">Admin Panel</Link></Typography>}
+      <Button onClick={logoutUser} variant="text">LogOut</Button>
       </Box>
       : (<Typography sx={{p: 1 , textAlign:"center"}}>You are not <Link to="login">log in</Link>/<Link to="sign-up">sign up</Link></Typography>)
       }

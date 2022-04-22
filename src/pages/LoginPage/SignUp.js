@@ -23,7 +23,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Softbazar
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -40,19 +40,15 @@ export default function SignUp() {
     // role
     // const [role, setRole] = React.useState('customer');
     const handleChange = (e) => {
-      // setRole(event.target.value);
       const name = e.target.name;
       const value = e.target.value;
-      // const email = e.target.email;
-      // const password = e.target.password;
-      // const password_confirmation = e.target.password_confirmation;
-      // const phone = e.target.phone;
       setUser({...user,[name]: value})
+      console.log(user);
     };
   const handleSubmit = (event) => {
     event.preventDefault();
     if(user.name && user.email && user.password && user.password_confirmation && user.phone && user.role){
-      console.log("bababa");
+      console.log(user);
       signupUser(user)
     }
   };
@@ -153,7 +149,7 @@ export default function SignUp() {
                 onChange={handleChange}
                 >
                 <MenuItem value={"customer"}>customer</MenuItem>
-                <MenuItem value={"vendor"}>vender</MenuItem>
+                <MenuItem value={"vender"}>vender</MenuItem>
                 </Select>
                 </FormControl>
               </Grid>
