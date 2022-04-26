@@ -1,10 +1,39 @@
-import React from 'react'
+import React,{useContext,useEffect,useState} from 'react'
 import LdealProduct from "./LdealProduct";
 import { useGlobalContext } from "../contexts/context";
+import AuthContext  from "../contexts/AuthContext";
+import  axios  from "axios";
 
 const Ldeal = ({title}) => {
-    const { ldealproducts } = useGlobalContext();
+    const [ldealproducts, setLdealproducts] = useState([])
 
+    let {userId} = useContext(AuthContext)
+    function modifyimage(jsonObj) {
+        let words=[];
+        let dom = 'http://127.0.0.1:8000/uploads/images/'
+        for (var i = 0; i < jsonObj.length; i++) {
+          let datajson = jsonObj[i].image.slice(1, -1);
+             words = datajson.split(',');
+             jsonObj[i].img = dom +  words[0].slice(1, -1);
+          }
+          console.log(jsonObj);
+            return jsonObj;
+      }
+    let getLData =  async (id) => {
+
+        axios(`http://127.0.0.1:8000/api/ai_machine/ai/${id}`)
+        .then((response)=> {
+        setLdealproducts((modifyimage(response.data)).filter((word,i) => i < 5))
+      })
+     }
+     useEffect(() => {
+         if(userId){
+             getLData(userId)
+         }
+     
+     }, [userId])
+     
+    // const { ldealproducts } = useGlobalContext();
     return (
         <div id="Ldeal">
             <div className="deal_header">

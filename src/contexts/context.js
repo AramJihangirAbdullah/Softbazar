@@ -24,7 +24,7 @@ const AppProvider = ({ children }) => {
   })
  }
   let getLData =  async () => {
-    axios('http://127.0.0.1:8000/api/products')
+    axios('http://127.0.0.1:8000/api/ai_machine/ai/{id}')
     .then((response)=> {
     setLdealproducts((modifyimage(response.data)).filter((word,i) => i < 5))
   })
@@ -32,7 +32,7 @@ const AppProvider = ({ children }) => {
 
   useEffect(() => {
       getData()
-      getLData()
+      // getLData()
   }, []);
 
 

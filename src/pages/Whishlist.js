@@ -28,6 +28,8 @@ import {  useNavigate } from "react-router-dom";
 
 
 const Whishlist = () => {
+  let {getCategory,category,userId} = useContext(AuthContext)
+  console.log(userId + "userId");
   function modifyimage(jsonObj) {
     let words=[];
     let dom = 'http://127.0.0.1:8000/uploads/images/'
@@ -44,9 +46,27 @@ const Whishlist = () => {
   const [data, setData] = useState([])
   let getsearch = async ()=>{
     await axios.get(`http://localhost:8000/api/favourites`)
-   .then((response) => {
-     console.log(response)
-     setData((response.data))
+   .then( (response) => {
+     console.log(response.data)
+     response.data.map((rr)=>{
+       if(rr.user_id == userId ){
+         axios.get(`http://localhost:8000/api/products/${rr.product_id}`)
+        .then((res)=>{
+          console.log(res);
+          setData([...data,res.data])
+          setResponse(data)
+          console.log(data);
+        })
+
+       }
+     })
+  //    await axios.get(`http://localhost:8000/api/favourites`)
+  //  .then((response) => {
+  //    console.log(response)
+  //    setData((response.data))
+  //  }, (error) => {
+  //    console.log(error);
+  //  });
    }, (error) => {
      console.log(error);
    });
@@ -58,7 +78,6 @@ const Whishlist = () => {
         navigate("../product/" + name)
     }
   // get category list
-let {getCategory,category} = useContext(AuthContext)
 let names = []
 names = category;
 console.log(names);
@@ -70,13 +89,11 @@ console.log(names);
       setRating(event.target.value);
     };
    useEffect(() => {
-    //  if (category) {
-       
+     if (userId) {
        getsearch()
-      
       getCategory()
-
-   }, []);
+     }
+   }, [userId]);
   // Pagination
   let [page, setPage] = useState(1);
   const p = page; // for changing the page

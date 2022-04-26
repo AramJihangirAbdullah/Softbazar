@@ -28,6 +28,7 @@ import {  useNavigate } from "react-router-dom";
 
 
 const Category = () => {
+  let {getCategory,category,userId} = useContext(AuthContext)
   function modifyimage(jsonObj) {
     let words=[];
     let dom = 'http://127.0.0.1:8000/uploads/images/'
@@ -35,17 +36,17 @@ const Category = () => {
       let datajson = jsonObj[i].image.slice(1, -1);
          words = datajson.split(',');
          jsonObj[i].img = dom +  words[0].slice(1, -1);
-      }
+        }
       console.log(jsonObj);
-        return jsonObj;
-  }
-  // fetch data
-  const [response, setResponse] = useState([])
-  const [data, setData] = useState([])
-  let getsearch = async (search)=>{
-    await axios.get(`http://localhost:8000/api/products/search/${search}`)
-   .then((response) => {
-     setData(modifyimage(response.data.data))
+      return jsonObj;
+    }
+    // fetch data
+    const [response, setResponse] = useState([])
+    const [data, setData] = useState([])
+    let getsearch = async (search)=>{
+      await axios.get(`http://localhost:8000/api/products/search/${search}`)
+      .then((response) => {
+        setData(modifyimage(response.data.data))
      setResponse(modifyimage(response.data.data))
    }, (error) => {
      console.log(error);
@@ -60,14 +61,22 @@ const Category = () => {
       console.log(error);
     });
   }
+   async function aii(id,userId){
+    await axios.post(`http://localhost:8000/api/ai_machine`,{user_id:userId,product_id:id})
+    .then((response) => {
+      console.log(response);
+    }, (error) => {
+      console.log(error);
+    });
+  }
   const navigate = useNavigate();
 
     const subsubm = (id,name)=>{
         Cookies.set('product_id',id);
+        aii(id,userId)
         navigate("../product/" + name)
     }
   // get category list
-let {getCategory,category} = useContext(AuthContext)
 let names = []
 names = category;
 console.log(names);
@@ -125,6 +134,7 @@ console.log(names);
         setResponse(data.filter(word => word.price <= maxMoney))
       }else setResponse(data)
       if(personName){
+        setResponse([])
         let catt=[];
         console.log(personName);
         personName.map((qll)=>{
@@ -133,8 +143,11 @@ console.log(names);
 
         catt.map((ca)=>{
           setResponse(data.filter(word => word.category_id == ca))
-          
         })
+        // catt.map((ca)=>{
+          
+        //   setResponse([...response,data.filter(word => word.category_id == ca)])
+        // })
       }
 
 
@@ -249,18 +262,13 @@ console.log(names);
                             sx={{minWidth: 150,width:1/1}}
                             labelId="demo-multiple-checkbox-label"
                             id="demo-multiple-checkbox"
-                            multiple
                             value={personName}
                             onChange={handleBrand}
                             input={<OutlinedInput label="Brands" />}
-                            renderValue={(selected) => selected.join(', ')}
                             MenuProps={MenuProps}
                             >
                             {names.map((name,i) => (
-                              <MenuItem key={name.id} value={name.name}>
-                                <Checkbox value={name.id} checked={personName.indexOf(name.name) > -1} />
-                                <ListItemText primary={name.name} />
-                                </MenuItem>
+                              <MenuItem key={name.id} value={name.name}>{name.name}</MenuItem>
                             ))}
                             </Select>
                         </FormControl>

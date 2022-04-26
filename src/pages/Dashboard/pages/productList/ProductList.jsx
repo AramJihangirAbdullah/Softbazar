@@ -65,11 +65,8 @@ export default function ProductList() {
     
     let delvenprod = async (id)=>{
       axios.delete(`http://localhost:8000/api/products/${id}`,{
-        headers: { Authorization: `Bearer ${Cookies.get('barear_token')}` }
-    },
-    {
-      vender_id:vendorId
-    })
+        vender_id:vendorId,headers: { Authorization: `Bearer ${Cookies.get('barear_token')}` }
+    },)
     .then((response) => {
       console.log("deleted");
       console.log(response);
